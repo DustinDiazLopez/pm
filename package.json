@@ -1,0 +1,15 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "postmantocsv.js",
+  "scripts": {
+    "pm2csv": "node postmantocsv",
+    "list:routes": "node routes"
+  },
+  "author": "DustinDiazLopez",
+  "license": "ISC",
+  "dependencies": {
+    "csv-writer": "^1.6.0"
+  }
+}
