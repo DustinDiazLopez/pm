@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "pm2csv": "node postmantocsv",
-    "list:routes": "node routes"
+    "license": "node index.js",
+    "pm2csv": "npm run license && node postmantocsv",
+    "list:routes": "npm run license && node routes"
   },
   "author": "DustinDiazLopez",
   "license": "MIT",

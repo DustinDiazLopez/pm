@@ -18,7 +18,7 @@ const ignoreFolders = [
 
 const re = /\.(checkout|copy|delete|get|head|lock|merge|mkactivity|mkcol|move|notify|options|patch|post|purge|put|report|search|subscribe|trace|unlock|unsubscribe)\((\'|\"|\`)/g;
 let g_count = 0;
-const debug = true;
+const debug = false;
 
 const logRoute = (line, idx) => {
   if (line) {
