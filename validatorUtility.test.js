@@ -125,7 +125,7 @@ test('test bad string', () => {
       },
     ],
   });
-  const sanitized = validator.escape(obj, true);
+  const sanitized = validator.escape(obj);
   const expected = {
     people: [{
       id: 1,
