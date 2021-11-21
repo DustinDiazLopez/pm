@@ -6,11 +6,19 @@
   "scripts": {
     "license": "node index.js",
     "pm2xls": "node postmantoxlsx",
-    "routes": "node routes"
+    "routes": "node routes",
+    "test": "jest"
   },
   "author": "Dustin Díaz",
   "license": "MIT",
   "dependencies": {
-    "excel4node": "^1.7.2"
+    "excel4node": "^1.7.2",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.3.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "jest": "^27.3.1"
   }
 }

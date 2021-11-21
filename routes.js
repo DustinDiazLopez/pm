@@ -9,31 +9,31 @@ if (!process.argv[2]) {
 const FOLDER = process.argv[2];
 
 const exts = [
-  'js', 'ts'
+  'js', 'ts',
 ];
 
 const ignoreFolders = [
   'node_modules',
 ];
 
-const re = /\.(checkout|copy|delete|get|head|lock|merge|mkactivity|mkcol|move|notify|options|patch|post|purge|put|report|search|subscribe|trace|unlock|unsubscribe)\((\'|\"|\`)/g;
+const re = /\.(checkout|copy|delete|get|head|lock|merge|mkactivity|mkcol|move|notify|options|patch|post|purge|put|report|search|subscribe|trace|unlock|unsubscribe)\(('|"|`)/g;
 const reUri = /^\/(\/?.\w+)+\w$/g;
-let g_count = 0;
+let gCount = 0;
 const debug = false;
 
 const logRoute = (line, idx) => {
   if (line) {
     line = re.exec(line.trim())?.input.trim();
     if (line && line.match(reUri)) {
-      const n = ++g_count;
+      const n = ++gCount;
       const ln = idx + 1;
       let method = line.split('(')[0].split('.');
       method = method[method.length - 1].toUpperCase();
       let endpoint = line.split(',')[0].split('(');
-      endpoint = endpoint[endpoint.length - 1]
-      endpoint = endpoint.substring(1, endpoint.length - 1)
-      
-      console.log(n, method, endpoint, `Ln ${ln}`, '\t', debug ? line : '')
+      endpoint = endpoint[endpoint.length - 1];
+      endpoint = endpoint.substring(1, endpoint.length - 1);
+
+      console.log(n, method, endpoint, `Ln ${ln}`, '\t', debug ? line : '');
     }
   }
 };
@@ -60,17 +60,17 @@ const contains = (fullPath, strs) => {
 };
 
 const main = function (directoryName) {
-  fs.readdir(directoryName, function (e, files) {
+  fs.readdir(directoryName, (e, files) => {
     if (e) {
       console.error('Error: ', e);
       return;
     }
 
-    files.forEach(function (file) {
+    files.forEach((file) => {
       const fullPath = path.join(directoryName, file);
-      fs.stat(fullPath, function (e, f) {
-        if (e) {
-          console.log('Error: ', e);
+      fs.stat(fullPath, (err, f) => {
+        if (err) {
+          console.error('Error: ', err);
           return;
         }
         if (f.isDirectory()) {

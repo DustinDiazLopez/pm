@@ -1,5 +1,6 @@
 const fs = require('fs');
 const excel = require('excel4node');
+
 const workbook = new excel.Workbook();
 
 const style = workbook.createStyle({
@@ -19,7 +20,6 @@ if (!process.argv[3]) {
   process.exit(-2);
 }
 
-
 const COLLECTION_PATH = process.argv[2];
 const OUT_PATH = process.argv[3];
 
@@ -38,20 +38,22 @@ const worksheet = workbook.addWorksheet(COLLECTION_PATH);
 const fixBody = (strJson) => {
   if (typeof strJson === 'string' || strJson instanceof String) {
     return JSON.stringify(JSON.parse(strJson), undefined, 2);
-  } else if (typeof strJson === 'object') {
+  }
+
+  if (typeof strJson === 'object') {
     console.log('using object');
     return JSON.stringify(strJson, undefined, 2);
-  } else {
-    console.error(typeof strJson, 'is not supported for body');
-    process.exit(5);
   }
+
+  console.error(typeof strJson, 'is not supported for body');
+  return strJson;
 };
 
 const headerToString = (header, separator = ':') => {
   const builder = [];
   for (const h of header) {
-    const key = h.key;
-    const value = h.value;
+    const { key } = h;
+    const { value } = h;
     builder.push(`${key}${separator}${value}\n`);
   }
   return builder.join('');
@@ -64,16 +66,16 @@ function validName(itemName) {
 }
 
 function getUrl(req) {
-  const url = req.url;
+  const { url } = req;
   if (url.raw) {
     return url.raw;
   }
 
-  if (typeof url == 'string' || url instanceof String) {
+  if (typeof url === 'string' || url instanceof String) {
     return url;
   }
 
-  console.log('Invalid URL: ' + url);
+  console.log(`Invalid URL: ${url}`);
   return url;
 }
 
@@ -96,7 +98,6 @@ worksheet.cell(row, ++col).string('Local Response Status').style(style);
 row++;
 
 fs.readFile(COLLECTION_PATH, 'utf8', (err, data) => {
-  const result = [];
   if (err) {
     console.log(`Error reading file from disk: ${err}`);
   } else {
@@ -129,7 +130,7 @@ fs.readFile(COLLECTION_PATH, 'utf8', (err, data) => {
               const localReq = localRes.originalRequest;
 
               const endpoint = masterRes.name.replace('master', '');
-              const method = masterReq.method;
+              const { method } = masterReq;
               const masterUrl = getUrl(masterReq);
               const localUrl = getUrl(localReq);
               const masterRequestHeader = headerToString(masterReq.header);
