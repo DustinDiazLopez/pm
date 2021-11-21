@@ -59,7 +59,7 @@ const contains = (fullPath, strs) => {
   return true;
 };
 
-const main = function (directoryName) {
+function main(directoryName) {
   fs.readdir(directoryName, (e, files) => {
     if (e) {
       console.error('Error: ', e);
@@ -88,6 +88,6 @@ const main = function (directoryName) {
       });
     });
   });
-};
+}
 
 main(FOLDER);
