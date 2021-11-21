@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "license": "node index.js",
-    "pm2csv": "npm run license && node postmantocsv",
-    "list:routes": "npm run license && node routes"
+    "pm2xls": "node postmantoxlsx",
+    "routes": "node routes"
   },
-  "author": "DustinDiazLopez",
+  "author": "Dustin Díaz",
   "license": "MIT",
   "dependencies": {
-    "csv-writer": "^1.6.0"
+    "excel4node": "^1.7.2"
   }
 }
