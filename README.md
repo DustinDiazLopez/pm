@@ -25,4 +25,4 @@ npm pm2xls <collection.json> <out.xlsx>
 - `local-/ping/:param`
 - `master-/ping/:param`
 
-Also note that the name of the endpoint is in the name of the saved response. 
+Also note that the name of the endpoint is in the name of the saved response.

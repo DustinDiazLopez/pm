@@ -17,13 +17,14 @@ const ignoreFolders = [
 ];
 
 const re = /\.(checkout|copy|delete|get|head|lock|merge|mkactivity|mkcol|move|notify|options|patch|post|purge|put|report|search|subscribe|trace|unlock|unsubscribe)\((\'|\"|\`)/g;
+const reUri = /^\/(\/?.\w+)+\w$/g;
 let g_count = 0;
 const debug = false;
 
 const logRoute = (line, idx) => {
   if (line) {
-    line = re.exec(line.trim())?.input;
-    if (line) {
+    line = re.exec(line.trim())?.input.trim();
+    if (line && line.match(reUri)) {
       const n = ++g_count;
       const ln = idx + 1;
       let method = line.split('(')[0].split('.');
