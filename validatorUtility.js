@@ -17,13 +17,17 @@
  */
 function modifyValidatorEscape(_validator, _oldValidatorEscapeRef) {
   _validator.escape = function escape(obj) {
-    try {
-      const json = JSON.parse(obj); // json str to obj
-      if (json && typeof json === 'object') {
-        obj = json;
-      }
-      // eslint-disable-next-line no-empty
-    } catch (ignored) { }
+    let isJsonString = false;
+    if (typeof obj === 'string') {
+      try {
+        const json = JSON.parse(obj); // json str to obj
+        if (json && typeof json === 'object') {
+          obj = json;
+          isJsonString = true;
+        }
+        // eslint-disable-next-line no-empty
+      } catch (ignored) { }
+    }
 
     function _isString(_obj) {
       return typeof _obj === 'string' || _obj instanceof String;
@@ -73,7 +77,8 @@ function modifyValidatorEscape(_validator, _oldValidatorEscapeRef) {
       return sanitized;
     }
 
-    return _sanitizeObject(obj, _oldValidatorEscapeRef, _validator.unescape);
+    const result = _sanitizeObject(obj, _oldValidatorEscapeRef, _validator.unescape);
+    return isJsonString ? JSON.stringify(result) : result;
   };
 }
 

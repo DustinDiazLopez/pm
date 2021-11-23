@@ -3,9 +3,22 @@ const validator = require('validator');
 const _validatorEscape = validator.escape;
 require('./validatorUtility').modifyValidatorEscape(validator, _validatorEscape);
 
+class IdExample {
+  constructor(_id) {
+    this._id = _id;
+    this.date = new Date();
+    this.foo = 'bar';
+  }
+
+  toString() {
+    return this._id;
+  }
+}
+
 test('test normal', () => {
   const date = new Date();
   const obj = {
+    _id: new IdExample('example'),
     people: [{
       id: 1,
       first_name: 'Jeanette',
@@ -45,6 +58,7 @@ test('test normal', () => {
   };
   const sanitized = validator.escape(obj);
   const expected = {
+    _id: 'example',
     people: [{
       id: 1,
       first_name: 'Jeanette',
@@ -126,7 +140,7 @@ test('test bad string', () => {
     ],
   });
   const sanitized = validator.escape(obj);
-  const expected = {
+  const expected = JSON.stringify({
     people: [{
       id: 1,
       first_name: 'Jeanette',
@@ -163,6 +177,27 @@ test('test bad string', () => {
         date: date.toISOString(),
       },
     ],
-  };
-  expect(JSON.stringify(sanitized)).toEqual(JSON.stringify(expected));
+  });
+  expect(typeof sanitized).toEqual('string');
+  expect(sanitized).toEqual(expected);
+});
+
+test('test normal string', () => {
+  const obj = "Hello, <script>alert('world');</script>";
+  const sanitized = validator.escape(obj);
+  const expected = 'Hello, &lt;script&gt;alert(&#x27;world&#x27;);&lt;&#x2F;script&gt;';
+  expect(sanitized).toEqual(expected);
+});
+
+test('test number', () => {
+  const obj = 43892;
+  const sanitized = validator.escape(obj);
+  const expected = 43892;
+  expect(sanitized).toEqual(expected);
+});
+
+test('test function', () => {
+  const obj = (a, b) => a + b;
+  const sanitized = validator.escape(obj);
+  expect(sanitized(1, 1)).toEqual(2);
 });
