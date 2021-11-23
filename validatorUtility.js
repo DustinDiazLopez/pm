@@ -17,13 +17,13 @@
  */
 function modifyValidatorEscape(_validator, _oldValidatorEscapeRef) {
   _validator.escape = function escape(obj) {
-    let isJsonString = false;
+    let wasJsonString = false;
     if (typeof obj === 'string') {
       try {
-        const json = JSON.parse(obj); // json str to obj
+        const json = JSON.parse(obj); // json-str to obj
         if (json && typeof json === 'object') {
           obj = json;
-          isJsonString = true;
+          wasJsonString = true;
         }
         // eslint-disable-next-line no-empty
       } catch (ignored) { }
@@ -78,7 +78,7 @@ function modifyValidatorEscape(_validator, _oldValidatorEscapeRef) {
     }
 
     const result = _sanitizeObject(obj, _oldValidatorEscapeRef, _validator.unescape);
-    return isJsonString ? JSON.stringify(result) : result;
+    return wasJsonString ? JSON.stringify(result) : result;
   };
 }
 
