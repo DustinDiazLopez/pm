@@ -9,6 +9,7 @@
  *
  * @param {validator} _validator reference to the validator object
  * @param {Function} _oldValidatorEscapeRef reference to the old function of validator.escape
+ * @author Dustin Diaz
  * @example
  * const validator = require('validator');
  * const _validatorEscape = validator.escape;
