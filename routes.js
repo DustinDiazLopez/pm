@@ -16,15 +16,26 @@ const ignoreFolders = [
   'node_modules',
 ];
 
+const ignoreLinesContaining = [
+  'axios',
+];
+
 const re = /\.(checkout|copy|delete|get|head|lock|merge|mkactivity|mkcol|move|notify|options|patch|post|purge|put|report|search|subscribe|trace|unlock|unsubscribe)\(('|"|`)/g;
-const reUri = /^\/(\/?.\w+)+\w$/g;
+// const reUri = /^\/(\/?.\w+)+\w$/g;
 let gCount = 0;
 const debug = false;
 
 const logRoute = (line, idx) => {
   if (line) {
     line = re.exec(line.trim())?.input.trim();
-    if (line && line.match(reUri)) {
+    let skip = false;
+    for (let i = 0; i < ignoreLinesContaining.length; i++) {
+      if (line.includes(ignoreLinesContaining[i])) {
+        skip = true;
+        break;
+      }
+    }
+    if (line && !skip) {
       const n = ++gCount;
       const ln = idx + 1;
       let method = line.split('(')[0].split('.');
