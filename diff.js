@@ -1,5 +1,6 @@
 /* eslint-disable no-loop-func */
 const fs = require('fs');
+const uuid = require('uuid');
 const readline = require('readline-sync');
 const { exec } = require('child_process');
 
@@ -97,8 +98,8 @@ if (data) {
       if (response && responseKeys.length > 0) {
         if (responseKeys.length >= 2) {
           (async () => {
-            const name1 = `1${encodeURI(response[responseKeys[0]].name).replaceAll('/', '.')}.diff`;
-            const name2 = `2${encodeURI(response[responseKeys[1]].name).replaceAll('/', '.')}.diff`;
+            const name1 = uuid.v4();
+            const name2 = uuid.v4();
             const diff1 = format(response[responseKeys[0]]);
             const diff2 = format(response[responseKeys[1]]);
             fs.writeFileSync(name1, diff1);

@@ -13,8 +13,11 @@
   "author": "Dustin Díaz",
   "license": "MIT",
   "dependencies": {
+    "csv-writer": "^1.6.0",
     "excel4node": "^1.7.2",
+    "fast-csv": "^4.3.6",
     "readline-sync": "^1.4.10",
+    "uuid": "^8.3.2",
     "validator": "^13.7.0"
   },
   "devDependencies": {
