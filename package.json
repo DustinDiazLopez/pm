@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "license": "node index.js",
-    "pm2xls": "node postmantoxlsx",
+    "pm2xls": "node postmantoxlsx.js",
+    "chxcsv": "node scanconverter.js",
     "diff": "node diff",
     "routes": "node routes",
     "test": "jest"

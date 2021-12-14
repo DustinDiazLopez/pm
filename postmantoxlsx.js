@@ -12,11 +12,13 @@ const style = workbook.createStyle({
 
 if (!process.argv[2]) {
   console.error('Error: missing path to postman collection');
+  console.log('npm pm2xls <collection.json> <out.xlsx>');
   process.exit(-1);
 }
 
 if (!process.argv[3]) {
   console.error('Error: missing output path');
+  console.log('npm pm2xls <collection.json> <out.xlsx>');
   process.exit(-2);
 }
 

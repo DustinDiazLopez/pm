@@ -4,8 +4,20 @@ const fs = require('fs');
 const csv = require('fast-csv');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
-const INPUT_FILE = 'scan.csv';
-const OUTPUT_FILE = 'out.csv';
+const INPUT_FILE = process.argv[2];
+const OUTPUT_FILE = process.argv[3];
+
+if (!INPUT_FILE) {
+  console.error('Please provide path to the checkmarx csv report.');
+  console.log('npm run chxcsv <scan-report.csv> <scan-report.min.csv>');
+  process.exit(-1);
+}
+
+if (!OUTPUT_FILE) {
+  console.error('Please provide path to output the file.');
+  console.log('npm run chxcsv <scan-report.csv> <scan-report.min.csv>');
+  process.exit(-1);
+}
 
 const csvWriter = createCsvWriter({
   path: OUTPUT_FILE,
